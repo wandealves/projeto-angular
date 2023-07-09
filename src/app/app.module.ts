@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,8 @@ import { HomeComponent } from './navegacao/home/home.component';
 import { FooterComponent } from './navegacao/footer/footer.component';
 import { SobreComponent } from './institucional/sobre/sobre.component';
 import { rootRouterConfig } from './app.routes';
+import { CadastrosComponent } from './demos/reactive-forms/cadastros/cadastros.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -18,15 +20,19 @@ import { rootRouterConfig } from './app.routes';
     MenuComponent,
     HomeComponent,
     FooterComponent,
-    SobreComponent
+    SobreComponent,
+    CadastrosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     [RouterModule.forRoot(rootRouterConfig, { useHash: false})]
   ],
-  providers: [],
+  providers: [
+    {provide: APP_BASE_HREF, useValue:'/'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
