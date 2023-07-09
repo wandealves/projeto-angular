@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Usuario } from './models/usuario';
 
@@ -9,22 +9,26 @@ import { Usuario } from './models/usuario';
   styleUrls: ['./cadastros.component.css']
 })
 export class CadastrosComponent implements OnInit {
-  cadastroForm!:FormGroup;
-  usuario!:Usuario;
+  cadastroForm!: FormGroup;
+  usuario!: Usuario;
+  formResult: string = '';
 
-  constructor(private fb:FormBuilder){}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.cadastroForm = this.fb.group({
-      nome: [''],
+      nome: ['', Validators.required],
       cpf: [''],
-      email: [''],
+      email: ['', [Validators.required, Validators.email]],
       senha: [''],
       senhaConfirmacao: ['']
     });
   }
 
-  adicionarUsuario(){
-    this.usuario = {...this.cadastroForm.value};
+  adicionarUsuario() {
+    if (this.cadastroForm.dirty && this.cadastroForm.valid) {
+      this.usuario = { ...this.cadastroForm.value };
+      this.formResult = JSON.stringify(this.cadastroForm.value);
+    }
   }
 }
